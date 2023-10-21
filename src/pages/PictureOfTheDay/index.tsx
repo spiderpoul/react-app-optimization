@@ -7,6 +7,7 @@ const Text = styled.div`
   font-size: 18px;
   line-height: 32px;
   margin-bottom: 24px;
+  margin-top: 24px;
 `;
 
 const Container = styled.div`
@@ -24,7 +25,7 @@ const Video = styled.iframe`
   width: 100%;
 `;
 
-const Title = styled.div`
+const Title = styled.h1`
   font-size: 36px;
   font-weight: bold;
   color: darkcyan;
@@ -41,13 +42,15 @@ const PictureOfTheDay = () => {
   return (
     <Container>
       <>
-        <Title>{data.title}</Title>
-        <Text>{data.explanation}</Text>
+        <Title>
+          {data.title} <i className="fa fa-globe" aria-hidden="true"></i>
+        </Title>
         {data.media_type === "video" ? (
           <Video frameBorder="0" src={`${data.url}`} />
         ) : (
           <Image src={data.hdurl} />
         )}
+        <Text>{data.explanation}</Text>
       </>
     </Container>
   );

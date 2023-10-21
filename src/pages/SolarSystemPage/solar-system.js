@@ -12,7 +12,7 @@ import saturnTexture from "../../img/2k_saturn.jpg";
 import uranusTexture from "../../img/2k_uranus.jpg";
 import neptuneTexture from "../../img/2k_neptune.jpg";
 
-import saturnRingTexture from "../../img/Atmosferas/saturn ring.png";
+import saturnRingTexture from "../../img/Atmosferas/saturn_ring.png";
 
 export const showSolarSystem = (id) => {
   // Velocidade inicial dos planetas (normal)

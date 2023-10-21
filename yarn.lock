@@ -3263,7 +3263,7 @@
   "resolved" "https://artifactory.artifacts.avp.ru:443/artifactory/api/npm/common-public/check-types/-/check-types-11.2.3.tgz"
   "version" "11.2.3"
 
-"chokidar@^3.4.2", "chokidar@^3.5.3":
+"chokidar@^3.4.2", "chokidar@^3.5.3", "chokidar@>=3.0.0 <4.0.0":
   "integrity" "sha1-HPN8hwe5Mr0a8a4iwEMuKs0ZA70="
   "resolved" "https://artifactory.artifacts.avp.ru:443/artifactory/api/npm/common-public/chokidar/chokidar-3.5.3.tgz"
   "version" "3.5.3"
@@ -5422,6 +5422,11 @@
   "integrity" "sha512-bc4NBHqOqSfRW7POMkHd51LvClaeMXpm8dx0e8oE2GORbq5aRK7Bxl4FyzVLdGtLmvLKL7BTDBG5ACQm4HWjTA=="
   "resolved" "https://artifactory.artifacts.avp.ru:443/artifactory/api/npm/common-public/immer/-/immer-9.0.21.tgz"
   "version" "9.0.21"
+
+"immutable@^4.0.0":
+  "integrity" "sha512-fsXeu4J4i6WNWSikpI88v/PcVflZz+6kMhUfIwc5SY+poQRPnaf5V7qds6SUyUN3cVxEzuCab7QIoLOQ+DQ1wA=="
+  "resolved" "https://artifactory.artifacts.avp.ru:443/artifactory/api/npm/common-public/immutable/-/immutable-4.3.4.tgz"
+  "version" "4.3.4"
 
 "import-fresh@^3.1.0", "import-fresh@^3.2.1":
   "integrity" "sha1-NxYsJfy566oublPVtNiM4X2eDCs="
@@ -8473,6 +8478,15 @@
     "klona" "^2.0.4"
     "neo-async" "^2.6.2"
 
+"sass@^1.3.0", "sass@1.69.4":
+  "integrity" "sha512-+qEreVhqAy8o++aQfCJwp0sklr2xyEzkm9Pp/Igu9wNPoe7EZEQ8X/MBvvXggI2ql607cxKg/RKOwDj6pp2XDA=="
+  "resolved" "https://artifactory.artifacts.avp.ru:443/artifactory/api/npm/common-public/sass/-/sass-1.69.4.tgz"
+  "version" "1.69.4"
+  dependencies:
+    "chokidar" ">=3.0.0 <4.0.0"
+    "immutable" "^4.0.0"
+    "source-map-js" ">=0.6.2 <2.0.0"
+
 "sax@~1.2.4":
   "integrity" "sha1-KBYjTiN4vdxOU1T6tcqold9xANk="
   "resolved" "https://artifactory.artifacts.avp.ru:443/artifactory/api/npm/common-public/sax/sax-1.2.4.tgz"
@@ -8727,7 +8741,7 @@
   "resolved" "https://artifactory.artifacts.avp.ru:443/artifactory/api/npm/common-public/source-list-map/source-list-map-2.0.1.tgz"
   "version" "2.0.1"
 
-"source-map-js@^1.0.1", "source-map-js@^1.0.2":
+"source-map-js@^1.0.1", "source-map-js@^1.0.2", "source-map-js@>=0.6.2 <2.0.0":
   "integrity" "sha1-rbw2HZxi3zgBJefxYfccgm8eSQw="
   "resolved" "https://artifactory.artifacts.avp.ru:443/artifactory/api/npm/common-public/source-map-js/source-map-js-1.0.2.tgz"
   "version" "1.0.2"
