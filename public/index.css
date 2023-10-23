@@ -11,7 +11,7 @@ p {
 }
 
 h1 {
-  font-family: 'Orbit';
+  font-family: 'LilitaOne';
 }
 
 code {
@@ -37,6 +37,14 @@ code {
 @font-face {
   font-family: 'Orbit';
   src: url('fonts/Orbit.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'LilitaOne';
+  src: url('fonts/LilitaOne.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: block;

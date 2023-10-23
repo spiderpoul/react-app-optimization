@@ -32,7 +32,7 @@ const Title = styled.h1`
   display: flex;
   align-items: center;
   font-size: 36px;
-  font-weight: bold;
+  font-weight: 400;
   color: darkcyan;
   margin-bottom: 24px;
 `;
@@ -43,8 +43,8 @@ const GlobeIconStyled = styled(GlobeIcon)`
   margin-left: 12px;
 `;
 
-const PICTURE_URL =
-  "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000743/GSFC_20171208_Archive_e000743~orig.png";
+const PICTURE_URL = "./img/nebula.webp";
+const PICTURE_URL_FALLBACK = "./img/nebula.png";
 
 export const pictureOfTheDayLoader = () => {
   return fetch(API_URL_IMAGE_OF_THE_DAY);

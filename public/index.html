@@ -8,13 +8,20 @@
   <meta name="theme-color" content="#000000" />
   <meta name="description" content="Web site created using create-react-app" />
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-  <link rel="stylesheet" href="%PUBLIC_URL%/icons.css">
   <link rel="stylesheet" href="%PUBLIC_URL%/index.css">
   <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+
+  <link rel="preload" href="/fonts/LilitaOne.ttf" as="font" />
+  <link rel="preload" href="/fonts/OpenSans-Light.ttf" as="font" />
+  <link rel="preload" href="/fonts/OpenSans-SemiBold.ttf" as="font" />
+
+  <link rel="preload" as="image" href="/img/nebula.webp" fetchpriority="high" />
+
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
