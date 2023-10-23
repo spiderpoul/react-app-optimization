@@ -25,7 +25,6 @@ code {
   src: url('fonts/OpenSans-Light.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
-  font-display: block;
 }
 
 @font-face {
@@ -33,7 +32,6 @@ code {
   src: url('fonts/OpenSans-SemiBold.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
-  font-display: block;
 }
 
 @font-face {
