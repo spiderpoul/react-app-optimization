@@ -1,11 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { BaseLayout } from "./components/BaseLayout";
-import PictureOfTheDay, {
-  pictureOfTheDayLoader,
-} from "./pages/PictureOfTheDay";
-import PlanetPage, { planetInfoLoader } from "./pages/PlanetPage";
-import { SolarSystemPage } from "./pages/SolarSystemPage";
+
+// import PlanetPage, { planetInfoLoader } from "";
+// import { SolarSystemPage } from "./pages/SolarSystemPage";
 
 const router = createBrowserRouter([
   {
@@ -14,17 +12,26 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        loader: pictureOfTheDayLoader,
-        element: <PictureOfTheDay />,
+        lazy: () =>
+          import("./pages/PictureOfTheDay").then((m) => ({
+            Component: m.PictureOfTheDay,
+            loader: m.pictureOfTheDayLoader,
+          })),
       },
       {
         path: ":planet",
-        element: <PlanetPage />,
-        loader: planetInfoLoader,
+        lazy: () =>
+          import("./pages/PlanetPage").then((m) => ({
+            Component: m.PlanetPage,
+            loader: m.planetInfoLoader,
+          })),
       },
       {
         path: "solar-system",
-        element: <SolarSystemPage />,
+        lazy: () =>
+          import("./pages/SolarSystemPage").then((m) => ({
+            Component: m.SolarSystemPage,
+          })),
       },
     ],
   },

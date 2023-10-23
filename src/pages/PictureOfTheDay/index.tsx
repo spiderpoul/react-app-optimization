@@ -50,10 +50,10 @@ export const pictureOfTheDayLoader = () => {
   return fetch(API_URL_IMAGE_OF_THE_DAY);
 };
 
-const PictureOfTheDay = () => {
+export const PictureOfTheDay = () => {
   const data = useLoaderData() as PictureOfTheDayResponse;
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     myLongTask();
   }, []);
 
@@ -73,5 +73,3 @@ const PictureOfTheDay = () => {
     </Container>
   );
 };
-
-export default PictureOfTheDay;
