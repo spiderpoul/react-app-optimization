@@ -1,7 +1,7 @@
 const fs = require("fs");
 const http = require("http");
 const path = require("path");
-const PORT = 8081;
+const PORT = process.env.PORT;
 
 const STATIC_PATH = path.join(process.cwd(), "./");
 
