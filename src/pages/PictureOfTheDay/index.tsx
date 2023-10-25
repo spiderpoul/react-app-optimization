@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { API_URL_IMAGE_OF_THE_DAY } from "../../constants";
 import { useLoaderData } from "react-router-dom";
 import { PictureOfTheDayResponse } from "../../types";
+import { useEffect } from "react";
 import { myLongTask } from "../../utils/long-tasks";
-import { useLayoutEffect } from "react";
 import { ReactComponent as GlobeIcon } from "../../img/globe.svg";
 
 const Text = styled.div`
@@ -50,10 +50,10 @@ export const pictureOfTheDayLoader = () => {
   return fetch(API_URL_IMAGE_OF_THE_DAY);
 };
 
-const PictureOfTheDay = () => {
+export const PictureOfTheDay = () => {
   const data = useLoaderData() as PictureOfTheDayResponse;
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     myLongTask();
   }, []);
 
@@ -69,5 +69,3 @@ const PictureOfTheDay = () => {
     </Container>
   );
 };
-
-export default PictureOfTheDay;

@@ -1,10 +1,11 @@
 const scheduler = (window as any).scheduler;
 
 export function myLongTask() {
-    heavyCalculation1()
-    heavyCalculation2()
-    heavyCalculation3()
-    heavyCalculation4()
+    // priority: "user-blocking", "user-visible", "background".
+    scheduler.postTask(heavyCalculation1, { priority: 'background' })
+    scheduler.postTask(heavyCalculation2, { priority: 'background' })
+    scheduler.postTask(heavyCalculation3, { priority: 'background' })
+    scheduler.postTask(heavyCalculation4, { priority: 'background' })
 }
 
 const heavyCalculation1 = () => {

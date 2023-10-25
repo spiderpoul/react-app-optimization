@@ -7,10 +7,8 @@ export const planetInfoLoader: LoaderFunction = ({ params: { planet } }) => {
   return defer({ data });
 };
 
-function PlanetPage() {
+export function PlanetPage() {
   const { data } = useLoaderData() as any;
 
   return <CardGrid data={data} />;
 }
-
-export default PlanetPage;

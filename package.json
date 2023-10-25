@@ -46,7 +46,8 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%"
+      "last 2 versions",
+      "not dead"
     ],
     "development": [
       "last 1 chrome version",
