@@ -18,9 +18,9 @@ const Container = styled.div`
 `;
 
 const Image = styled("img")`
-  max-width: 100%;
-  height: auto;
   width: 100%;
+  object-fit: cover;
+  aspect-ratio: 4 / 3;
 `;
 
 const Video = styled.iframe`
