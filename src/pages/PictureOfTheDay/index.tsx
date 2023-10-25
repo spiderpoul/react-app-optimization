@@ -4,6 +4,7 @@ import { useLoaderData } from "react-router-dom";
 import { PictureOfTheDayResponse } from "../../types";
 import { myLongTask } from "../../utils/long-tasks";
 import { useLayoutEffect } from "react";
+import { ReactComponent as GlobeIcon } from "../../img/globe.svg";
 
 const Text = styled.div`
   font-size: 18px;
@@ -36,6 +37,15 @@ const Title = styled.h1`
   margin-bottom: 24px;
 `;
 
+const GlobeIconStyled = styled(GlobeIcon)`
+  fill: darkcyan;
+  width: 28px;
+  margin-left: 12px;
+`;
+
+const PICTURE_URL = "./img/nebula.webp";
+const PICTURE_URL_FALLBACK = "./img/nebula.png";
+
 export const pictureOfTheDayLoader = () => {
   return fetch(API_URL_IMAGE_OF_THE_DAY);
 };
@@ -51,7 +61,7 @@ const PictureOfTheDay = () => {
     <Container>
       <>
         <Title>
-          {data.title} <i className="fa fa-globe" aria-hidden="true"></i>
+          {data.title} <GlobeIconStyled />
         </Title>
         <Image src={PICTURE_URL} />
         <Text>{data.explanation}</Text>
