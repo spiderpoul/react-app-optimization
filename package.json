@@ -27,6 +27,14 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build-0": "set BUILD_PATH=demo/0&& react-scripts build",
+    "build-1": "set BUILD_PATH=demo/1&& react-scripts build",
+    "build-2": "set BUILD_PATH=demo/2&& react-scripts build",
+    "build-3": "set BUILD_PATH=demo/3&& react-scripts build",
+    "server-0": "set PORT=8080&& cd ./demo/0 && node server",
+    "server-1": "set PORT=8081&& cd ./demo/1 && node server",
+    "server-2": "set PORT=8082&& cd ./demo/2 && node server",
+    "server-3": "set PORT=8083&& cd ./demo/3 && node server",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
