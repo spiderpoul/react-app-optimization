@@ -22,7 +22,7 @@ code {
 
 @font-face {
   font-family: 'Open Sans';
-  src: url('fonts/OpenSans-Light.ttf') format('truetype');
+  src: url('../public/fonts/OpenSans-Light.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -30,7 +30,7 @@ code {
 
 @font-face {
   font-family: 'Open Sans Semibold';
-  src: url('fonts/OpenSans-SemiBold.ttf') format('truetype');
+  src: url('../public/fonts/OpenSans-SemiBold.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -38,7 +38,7 @@ code {
 
 @font-face {
   font-family: 'Orbit';
-  src: url('fonts/Orbit.ttf') format('truetype');
+  src: url('../public/fonts/Orbit.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: block;
