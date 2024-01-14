@@ -1,12 +1,17 @@
 import { useEffect } from "react";
 import styled from "styled-components";
-import { showSolarSystem } from "./solar-system";
+
 
 const ELEMENT_ID = "solar-system"
 
 export const SolarSystemPage = () => {
   useEffect(() => {
-    showSolarSystem(ELEMENT_ID);
+    const init = async () => {
+      const { showSolarSystem } = await import("./solar-system")
+      showSolarSystem(ELEMENT_ID);
+    }
+
+    init()
   }, []);
   return (
     <>

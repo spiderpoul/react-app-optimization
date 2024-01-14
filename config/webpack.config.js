@@ -249,7 +249,9 @@ module.exports = function (webpackEnv) {
       minimize: isEnvProduction,
       minimizer: [
         // This is only used in production mode
-        new CssMinimizerPlugin(),
+        new TerserPlugin(),
+        // This is only used in production mode
+        new CssMinimizerPlugin()
       ],
     },
     resolve: {
