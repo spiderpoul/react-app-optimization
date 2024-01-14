@@ -3,7 +3,7 @@ import defaultBg from "../img/default-bg.jpg";
 
 const HeaderContainer = styled.div`
   position: relative;
-  height: 500px;
+  height: 200px;
   width: 100%;
   background-color: #000;
   overflow: hidden;

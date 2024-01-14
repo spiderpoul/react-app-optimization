@@ -29,6 +29,7 @@
     "eslint": "^8.3.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-webpack-plugin": "^3.1.1",
+    "express": "4.18.2",
     "file-loader": "^6.2.0",
     "fs-extra": "^10.0.0",
     "html-webpack-plugin": "^5.5.0",
@@ -73,14 +74,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "build-0": "set BUILD_PATH=demo/0&& node scripts/build.js",
-    "build-1": "set BUILD_PATH=demo/1&& node scripts/build.js",
-    "build-2": "set BUILD_PATH=demo/2&& node scripts/build.js",
-    "build-3": "set BUILD_PATH=demo/3&& node scripts/build.js",
-    "server-0": "set PORT=8080&& cd ./demo/0 && node server",
-    "server-1": "set PORT=8081&& cd ./demo/1 && node server",
-    "server-2": "set PORT=8082&& cd ./demo/2 && node server",
-    "server-3": "set PORT=8083&& cd ./demo/3 && node server",
+    "serve": "node server",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {
@@ -91,12 +85,10 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%"
+      ">0.1%"
     ],
     "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      ">0.1%"
     ]
   },
   "jest": {

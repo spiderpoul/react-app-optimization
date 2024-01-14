@@ -246,11 +246,8 @@ module.exports = function (webpackEnv) {
       level: 'none',
     },
     optimization: {
+      // minimize: isEnvProduction,
       minimize: false,
-      minimizer: [
-        // This is only used in production mode
-        new CssMinimizerPlugin(),
-      ],
     },
     resolve: {
       // This allows you to set a fallback for where webpack should look for modules.

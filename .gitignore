@@ -24,4 +24,5 @@ yarn-error.log*
 node_modules
 .vscode
 package-lock.json
+yarn.lock
 demo

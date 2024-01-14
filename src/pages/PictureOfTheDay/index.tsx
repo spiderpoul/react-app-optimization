@@ -40,6 +40,8 @@ export const pictureOfTheDayLoader = () => {
   return fetch(API_URL_IMAGE_OF_THE_DAY);
 };
 
+const PICTURE_URL = "./img/nebula.png";
+
 const PictureOfTheDay = () => {
   const data = useLoaderData() as PictureOfTheDayResponse;
 
