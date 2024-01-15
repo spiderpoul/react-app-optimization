@@ -18,10 +18,10 @@ const Container = styled.div`
   padding: 24px;
 `;
 
-const Image = styled("img")`
-  max-width: 100%;
-  height: auto;
+const Img = styled("img")`
   width: 100%;
+  object-fit: cover;
+  aspect-ratio: 4 / 3;
 `;
 
 const Video = styled.iframe`
@@ -49,7 +49,6 @@ export const pictureOfTheDayLoader = () => {
   return fetch(API_URL_IMAGE_OF_THE_DAY);
 };
 
-const PICTURE_URL = "./img/nebula.png";
 
 const PictureOfTheDay = () => {
   const data = useLoaderData() as PictureOfTheDayResponse;
@@ -64,7 +63,10 @@ const PictureOfTheDay = () => {
         <Title>
           {data.title} <GlobeIconStyled />
         </Title>
-        <Image src={PICTURE_URL} />
+        <picture>
+          <source srcSet="./img/nebula.webp" type="image/webp" />
+          <Img src="./img/nebula.png" alt="nebula" />
+        </picture>
         <Text>{data.explanation}</Text>
       </>
     </Container>
