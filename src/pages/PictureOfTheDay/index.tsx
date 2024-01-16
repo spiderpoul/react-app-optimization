@@ -2,9 +2,9 @@ import styled from "styled-components";
 import { API_URL_IMAGE_OF_THE_DAY } from "../../constants";
 import { useLoaderData } from "react-router-dom";
 import { PictureOfTheDayResponse } from "../../types";
-import { myLongTask } from "../../utils/long-tasks";
 import { useLayoutEffect } from "react";
 import { ReactComponent as GlobeIcon } from "../../img/globe.svg";
+import { doLongTaskWithWorker } from "../../utils/do-long-task-with-worker";
 
 
 const Text = styled.div`
@@ -54,7 +54,9 @@ const PictureOfTheDay = () => {
   const data = useLoaderData() as PictureOfTheDayResponse;
 
   useLayoutEffect(() => {
-    myLongTask();
+    doLongTaskWithWorker().then(res => {
+      console.log('Long task done', res)
+    })
   }, []);
 
   return (
