@@ -1,5 +1,4 @@
 import React from 'react'
-import StyledComponentsRegistry from './lib/registry'
  
 export default function RootLayout({
   children,
@@ -9,7 +8,7 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        {children}
       </body>
     </html>
   )

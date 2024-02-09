@@ -1,4 +1,4 @@
-// import CardGrid from "./components/ImagesGrid";
+// import CardGrid from "./ImagesGrid";
 // import { SEARCH_API_URL } from "./constants";
 
 // export const planetInfoLoader = ({ params: { planet } }) => {

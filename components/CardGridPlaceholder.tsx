@@ -1,19 +1,12 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
-import styled from 'styled-components';
+import styles from './CardGridPlaceholder.module.scss'
 
-const Container = styled.div`
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 1px 2px 0 rgba(25, 27, 26, 0.1),
-        0 1px 8px 0 rgba(25, 27, 26, 0.08);
-    margin-bottom: 24px;
-`;
 interface CardGridPlaceholderProps {}
 
 const CardGridPlaceholder: React.FC<CardGridPlaceholderProps> = () => {
     return (
-        <Container>
+        <div className={styles.container}>
             <ContentLoader
                 speed={2}
                 width={375}

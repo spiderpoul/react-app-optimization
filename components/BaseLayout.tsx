@@ -1,27 +1,18 @@
 import React from "react";
-import styled from "styled-components";
+import styles from "./BaseLayout.module.scss";
 import Content from "./Content";
 import { Header } from "./Header";
-import MobileMenu from "./MobileMenu";
 
 export const BaseLayout: React.FC<{children: React.ReactNode}> = ({children}) => {
   return (
-    <Layout>
-      <MobileMenu />
+    <div className={styles.layout}>
       <Header />
       <Content>
         {children}
       </Content>
-    </Layout>
+    </div>
   );
 };
 
-const Layout = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
 
 export default Content;

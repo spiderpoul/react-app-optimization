@@ -1,18 +1,5 @@
 import React, { useRef, useCallback } from "react";
-import styled from "styled-components";
-
-const ImageContainer = styled("div")<{ width?: number; height: number }>`
-  width: ${({ width }) => (width ? `${width}px` : "100%")};
-  overflow: hidden;
-  height: ${({ height }) => height}px;
-`;
-
-const ImageItem = styled("img")`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.2s ease-in-out;
-`;
+import styles from "./ZoomableImage.modules.scss";
 
 interface ZoomableImageProps {
   height: number;
@@ -75,16 +62,19 @@ const ZoomableImage: React.FC<ZoomableImageProps> = ({
   }, []);
 
   return (
-    <ImageContainer
+    <div
+      className={styles.ImageContainer}
+      style={{
+        width: width ? `${width}px` : "100%",
+        height: `${height}px`
+      }}
       ref={ref}
       onMouseMove={onMouseMove}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      height={height}
-      width={width}
     >
-      <ImageItem src={src} ref={refImage} />
-    </ImageContainer>
+      <img className={styles.ImageItem} src={src} ref={refImage} />
+    </div>
   );
 };
 
