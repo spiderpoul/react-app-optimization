@@ -3,7 +3,7 @@ const path = require('path');
 const compression = require('compression')
 const app = express();
 const bodyParser = require('body-parser');
-const { apod } = require('./mocks');
+const { APOD } = require('./mocks');
 
 
 app.use(compression())
@@ -15,7 +15,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/apod', (req, res) => {
-  res.json(apod)
+  res.json(APOD)
 })
 
 app.listen(process.env.PORT || 8080);

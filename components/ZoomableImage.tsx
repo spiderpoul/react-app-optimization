@@ -1,5 +1,5 @@
 import React, { useRef, useCallback } from "react";
-import styles from "./ZoomableImage.modules.scss";
+import styles from "./ZoomableImage.module.scss";
 
 interface ZoomableImageProps {
   height: number;

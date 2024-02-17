@@ -22,7 +22,7 @@ const CardGridPlaceholder: React.FC<CardGridPlaceholderProps> = () => {
                 <rect x="18" y="405" rx="0" ry="0" width="335" height="18" />
                 <rect x="18" y="430" rx="0" ry="0" width="306" height="18" />
             </ContentLoader>
-        </Container>
+        </div>
     );
 };
 

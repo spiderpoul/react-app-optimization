@@ -11,7 +11,7 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
-RUN npm install
+RUN npm install --strict-ssl false --registry https://artifactory.artifacts.avp.ru/artifactory/api/npm/common-public/
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
@@ -34,11 +34,12 @@ FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
-ENV NEXT_SHARP_PATH=/app/node_modules/sharp
+# ENV NEXT_SHARP_PATH=/app/node_modules/sharp
+
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
-COPY --from=deps --chown=nextjs:nodejs /app/node_modules/sharp /app/node_modules/sharp
+# COPY --from=deps --chown=nextjs:nodejs /app/node_modules/sharp /app/node_modules/sharp
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs

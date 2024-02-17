@@ -14,5 +14,4 @@ export const NAV_ITEMS = [
 
 export const SEARCH_API_URL = 'https://images-api.nasa.gov/search?q='
 
-export const API_URL_IMAGE_OF_THE_DAY =
-    'https://api.nasa.gov/planetary/apod?api_key=dZmuqhbS2Esu9rTmTrtjb2pMOYi9QgpuvicXyqEK';
+export const API_URL_IMAGE_OF_THE_DAY = 'http://localhost:8080/apod';

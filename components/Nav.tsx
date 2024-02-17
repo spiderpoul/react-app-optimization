@@ -1,3 +1,5 @@
+'use client'
+
 import React from "react";
 import styles from "./Nav.module.scss";
 import { NAV_ITEMS } from "../constants";
