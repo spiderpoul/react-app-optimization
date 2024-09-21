@@ -10,9 +10,10 @@
 }
 
 .img {
-  width: 100%;
   object-fit: cover;
-  aspect-ratio: 4 / 3;
+  float: left;
+  margin-right: 24px;
+  margin-bottom: 24px;
 }
 
 .title {
