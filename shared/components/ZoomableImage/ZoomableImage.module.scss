@@ -1,0 +1,10 @@
+.imageContainer {
+  overflow: hidden;
+};
+
+.imageItem {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease-in-out;
+};

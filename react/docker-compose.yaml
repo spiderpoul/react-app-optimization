@@ -1,0 +1,18 @@
+version: '1.0'
+services:  
+  client:
+    stdin_open: true
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    volumes:
+      - /app/node_modules
+      - ./:/app
+
+  express:
+    container_name: express-api
+    build:
+      context: ./
+      dockerfile: express.Dockerfile
+    ports:
+      - 8080:8080
