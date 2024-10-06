@@ -4,12 +4,7 @@ export const NAV_ITEMS = [
     { to: 'solar-system', title: 'Solar System' },
     { to: '/planets/earth', title: 'Earth' },
     { to: '/planets/saturn', title: 'Saturn' },
-    { to: '/planets/venus', title: 'Venus' },
-    { to: '/planets/jupiter', title: 'Jupiter' },
-    { to: '/planets/mars', title: 'Mars' },
-    { to: '/planets/neptune', title: 'Neptune' },
-    { to: '/planets/uranus', title: 'Uranus' },
-    { to: '/planets/mercury', title: 'Mercury' },
+    { to: '/planets/venus', title: 'Venus' }
 ];
 
 export const SEARCH_API_URL = 'https://images-api.nasa.gov/search?q='

@@ -1,4 +1,6 @@
 import nebula from "../../img/nebula.png";
+import { Accordion } from "../Accordion/AccordionList";
+import { accordionData } from "../Accordion/sections";
 import styles from "./PicOfTheDay.module.scss";
 
 export const PictureOfTheDay: React.FC<{
@@ -12,6 +14,9 @@ export const PictureOfTheDay: React.FC<{
         <img className={styles.img} src={nebula} alt="nebula" />
         <div className={styles.text}>{explanation}</div>
       </>
+      <div>
+        <Accordion sections={[...accordionData, ...accordionData, ...accordionData]} />
+      </div>
     </div>
   );
 };

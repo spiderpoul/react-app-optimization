@@ -1,0 +1,54 @@
+:root {
+    --primary: #227093;
+    --background: #f6f6f6;
+    --highlight: #ffda79;
+    /* Theme color */
+    --theme: var(--primary);
+  }
+
+.container {
+    color: var(--theme);
+    border: 2px solid;
+    border-bottom: none;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    max-width: 600px;
+}
+
+.container:last-of-type {
+    border-bottom: 2px solid;
+}
+
+.content-wrapper {
+    overflow: hidden;
+    transition: height 0.3s ease-in-out;
+}
+
+.content {
+    padding: 12px
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    color: var(--primary);
+    background: var(--background);
+    cursor: pointer;
+    padding: 12px;
+    font-weight: bold;
+}
+
+.header-icon {
+    width: 1em;
+    height: 1em;
+    text-align: center;
+    
+    transition: all 0.35s;
+}
+
+.arrow-up {
+    transform: rotate(90deg);
+}
+.arrow-down {
+    transform: rotate(270deg);
+}

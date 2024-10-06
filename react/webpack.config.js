@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
@@ -27,18 +28,7 @@ module.exports = {
       {
         test: /\.(js|ts)x?$/,
         use: {
-          loader: "babel-loader",
-          options: {
-            targets: "ie 10",
-            presets: [
-              [
-                "@babel/preset-env",
-                { useBuiltIns: "usage", targets: "ie 11", corejs: "3.38" },
-              ],
-              ["@babel/preset-react", { runtime: "automatic" }],
-              ["@babel/preset-typescript"],
-            ],
-          },
+          loader: "babel-loader"
         },
         exclude: /node_modules/,
         include: [
@@ -52,13 +42,13 @@ module.exports = {
       // CSS files
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       // SCSS files
       {
         test: /\.scss$/,
         use: [
-          "style-loader",
+          MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
             options: {
@@ -91,6 +81,7 @@ module.exports = {
     },
   },
   plugins: [
+    new MiniCssExtractPlugin(),
     new CopyWebpackPlugin({
       patterns: [ 
         {
