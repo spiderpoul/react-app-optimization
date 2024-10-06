@@ -16,10 +16,10 @@ const Nav: React.FC<{}> = () => {
 
 const NavItem = styled(NavLink)`
   position: relative;
-  font-size: 24px;
+  font-size: 20px;
   text-decoration: none;
   color: #000;
-  padding: 0 16px;
+  padding: 0 12px;
 
   &:hover {
     color: darkcyan;
@@ -31,7 +31,7 @@ const NavItem = styled(NavLink)`
     &:before {
       content: "";
       position: absolute;
-      bottom: -24px;
+      bottom: -12px;
       left: 0;
       width: 100%;
       border-bottom: 2px solid darkcyan;
@@ -41,8 +41,8 @@ const NavItem = styled(NavLink)`
 
 const NavContainer = styled.div`
   display: flex;
-  padding: 0 24px 24px;
-  margin: 0 -24px;
+  padding: 0 12px 12px;
+  margin: 0 -12px;
   border-bottom: 1px solid #ccc;
   flex-wrap: wrap;
 `;

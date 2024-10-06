@@ -6,6 +6,7 @@ const BundleAnalyzerPlugin =
 
 const path = require("path");
 const buildPath = path.resolve(__dirname, "build");
+const isDevMode = process.env.NODE_ENV !== 'production'
 
 module.exports = {
   // Entry point for the bundle
@@ -83,7 +84,7 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin(),
     new CopyWebpackPlugin({
-      patterns: [ 
+      patterns: [
         {
           from: "public",
           to: buildPath,
@@ -94,10 +95,10 @@ module.exports = {
       template: path.resolve(__dirname, "index.html"),
       filename: "index.html",
     }),
-    // process.env.NODE_ENV !== "production" &&
-    //   new BundleAnalyzerPlugin({
-    //     openAnalyzer: false,
-    //   }),
+    process.env.ANALYZE &&
+    new BundleAnalyzerPlugin({
+      openAnalyzer: false,
+    }),
   ].filter(Boolean),
   devtool: "source-map",
   devServer: {

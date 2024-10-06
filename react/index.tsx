@@ -7,4 +7,7 @@ import './index.css'
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
+performance.mark('InitialRender')
 root.render(<App />);
+performance.measure('Root initial render', 'InitialRender')

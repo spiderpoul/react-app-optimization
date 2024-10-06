@@ -8,7 +8,7 @@ const { APOD } = require('../shared/mocks/mocks');
 
 
 app.use(cors())
-app.use(compression())
+// app.use(compression())
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'build')));
 
@@ -20,4 +20,5 @@ app.get('/apod', (req, res) => {
   res.json(APOD)
 })
 
-app.listen(process.env.PORT || 8080);
+const port = process.env.PORT || 8080
+app.listen(port, () => console.log(`Listening on port: http://localhost:${port}`));

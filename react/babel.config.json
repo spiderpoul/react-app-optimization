@@ -2,7 +2,11 @@
     "presets": [
         [
             "@babel/preset-env",
-            { "useBuiltIns": "usage", "targets": "ie 11", "corejs": "3.38" }
+            { 
+                "targets": "ie 11",
+                "useBuiltIns": "usage",
+                "corejs": "3.38"
+            }
         ],
         [
             "@babel/preset-react",
