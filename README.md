@@ -82,19 +82,11 @@ mode: isDevMode ? "development" : 'production',
 
 ```
 
-#### 4. Оптимизация CSS
+#### 4. Bundle analyzer
 
-💡 CSS — это ресурс , блокирующий рендеринг, грузится в самом высоком приоритете. Необходимо выделить минимальное количество CSS необходимое для рендера основного каркаса приложения.
+💡 Анализ бандла поможет найти причины его "тучности", обнаружить дублирующие библиотеки и тп.
 
-В файле `react/index.html` удалите строчку
-
-```html
-   ~~ <link rel="stylesheet" href="/icons.css"> ~~
-```
-
-В `shared/components/Accordion/AccordionItem.tsx` замените стрелку из font-awesome на svg:
-
-!!! TODO
+Запустите `npm run build-analyze` для запуска `BundleAnalyzerPlugin`
 
 #### 5. Code splitting
 
@@ -136,6 +128,22 @@ const router = createBrowserRouter([
 ]);
 ```
 
+#### Оптимизация CSS
+
+💡 CSS — это ресурс , блокирующий рендеринг, грузится в самом высоком приоритете. Необходимо выделить минимальное количество CSS необходимое для рендера основного каркаса приложения.
+
+В файле `react/index.html` удалите строчку
+
+```html
+   <link rel="stylesheet" href="/icons.css">
+```
+
+и перенесите его импорт в `react/index.tsx`
+
+```js
+import './public/icons.css'
+```
+
 ### CLS
 
 #### Оптимизация размеров изображения
@@ -154,7 +162,52 @@ const router = createBrowserRouter([
 
 ### INP
 
-Оптимизаиця Accordion
+Оптимизация Accordion
+
+#### Циклический unmount
+
+В файле `shared/components/Accordion/AccordionList.tsx` установим стабильный  ключ:
+
+```tsx
+<AccordionItem
+    key={id} // установка стабильного ключа
+    id={id}
+    isOpen={isOpen}
+    text={text}
+    title={title}
+    onToggle={() => setOpenSections([id])}
+    />
+```
+
+#### Оптимизация лишних ререндеров
+
+💡 Понять какие именно компоненты реренделись и почему поможет расширение React Profiler.
+
+Вместо анонимной функции можно пробрасывать не изменяемую функцию `onToggle`. В файле `shared/components/Accordion/AccordionList.tsx`:
+
+```tsx
+<AccordionItem
+    key={id} 
+    id={id}
+    isOpen={isOpen}
+    text={text}
+    title={title}
+    onToggle={setOpenSections} // onToggle теперь не будет приводить к ререндеру
+    />
+```
+
+Далее в `shared/components/Accordion/AccordionItem.tsx`
+
+создадим функцию 
+
+```ts
+const onClick = () => onToggle([id]) 
+...
+// обновим имя функции
+<div className={styles.header} onClick={onClick}>
+```
+
+Теперь, чтобы предотвратить излишний ререндер компонента обернём его в `memo`.
 
 ## Обезвредить 😎
 
@@ -166,7 +219,6 @@ const router = createBrowserRouter([
 
 1) Декомпозиция компонентов
 2) Уход от CSS-in-JS для основного каркаса приложения
-3) 
 
 #### Оптимизация изображений
 
@@ -217,4 +269,97 @@ import Image from "next/image";
               placeholder="blur"
               alt="nebula"
             />
+```
+
+
+#### Prefetch для страниц
+
+💡 `next/link` позволяет префетчить данные страницы и обеспечивает базовую навигацию по роутам
+
+В компоненте `next-js/components/Nav/Nav.tsx` добавьте свойство `prefetch`
+
+```tsx
+        <Link
+          key={to}
+          className={cx(pathname === to && "active", styles.NavItem)}
+          href={to}
+          prefetch={true}
+        >
+          {title}
+        </Link>
+    
+```
+
+#### Оптимизация шрифтов
+
+💡 next/font will automatically optimize your fonts (including custom fonts) and remove external network requests for improved privacy and performance.
+
+В файле удалить описание шрифта:
+
+```css
+@font-face {
+  font-family: 'LilitaOne';
+  src: url('../shared/fonts/LilitaOne.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+```
+
+и добавьте в файле `shared/components/PictureOfTheDay/PicOfTheDay.tsx`
+
+```tsx
+import localFont from "next/font/local";
+
+const myFont = localFont({
+  src: "../../fonts/LilitaOne.ttf",
+  display: "swap",
+});
+
+// чтобы применить шрифт к элементу, необходимо использовать свойства className или style
+<h1 className={styles.title} style={myFont.style}>{title}</h1>
+```
+
+#### Instant Loading States
+💡 An instant loading state is fallback UI that is shown immediately upon navigation. The new content is automatically swapped in once rendering is complete.
+
+В папке `next-js/app/planets/[planet]` создадим файл `loading.tsx` с содержимым:
+
+```tsx
+import { GridLoader } from "../../../../shared/components/ImagesGrid";
+
+export default function Loading() {
+    return <GridLoader />
+  }
+```
+
+#### Streaming with Suspense
+
+💡 Streaming allows you to break down the page's HTML into smaller chunks and progressively send those chunks from the server to the client.
+
+В папке `next-js/app/page.tsx` оберните компонент, в котором происходит фетчинг данных в Suspense:
+
+```tsx
+const MainPageWrapper = () => {
+  return <Suspense fallback={<div>Loading content</div>}>
+    <MainPage />
+  </Suspense>
+}
+
+
+export default MainPageWrapper;
+```
+
+#### Caching
+
+💡 By default, Next.js will cache as much as possible to improve performance and reduce cost. This means routes are statically rendered and data requests are cached unless you opt out. 
+
+#### NextJS bundle analyzer
+
+💡 @next/bundle-analyzer is a plugin for Next.js that helps you manage the size of your JavaScript modules. You can use the information to remove large dependencies, split your code, or only load some parts when needed, reducing the amount of data transferred to the client.
+
+Для запуска next/bundle-analyzer используйте скрипт:
+
+```shell
+npm run next-build-analyze
 ```

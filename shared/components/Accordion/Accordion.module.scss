@@ -1,13 +1,5 @@
-:root {
-    --primary: #227093;
-    --background: #f6f6f6;
-    --highlight: #ffda79;
-    /* Theme color */
-    --theme: var(--primary);
-  }
-
 .container {
-    color: var(--theme);
+    color: #227093;
     border: 2px solid;
     border-bottom: none;
     border-radius: 0.5rem;
@@ -31,8 +23,8 @@
 .header {
     display: flex;
     justify-content: space-between;
-    color: var(--primary);
-    background: var(--background);
+    color: #227093;
+    background: #f6f6f6;
     cursor: pointer;
     padding: 12px;
     font-weight: bold;

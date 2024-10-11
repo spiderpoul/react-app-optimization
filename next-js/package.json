@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@next/bundle-analyzer": "14.2.15",
     "@types/node": "20.11.5",
     "@types/react": "18.3.8",
     "babel-plugin-inline-react-svg": "2.0.2",
@@ -24,6 +25,7 @@
     "server": "node server",
     "next-dev": "next dev -p 9090",
     "next-build": "next build",
+    "next-build-analyze": "ANALYZE=true npm run next-build",
     "next-start": "next start -p 9090",
     "next-lint": "next lint"
   },

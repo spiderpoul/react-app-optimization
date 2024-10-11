@@ -15,9 +15,9 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
-
+ 
 app.get('/apod', (req, res) => {
-  res.json(APOD)
+  setTimeout(() => res.json(APOD), 500)
 })
 
 const port = process.env.PORT || 8080

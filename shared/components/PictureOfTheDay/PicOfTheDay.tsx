@@ -11,7 +11,7 @@ export const PictureOfTheDay: React.FC<{
     <div className={styles.container}>
       <>
         <h1 className={styles.title}>{title}</h1>
-        <img className={styles.img} src={nebula} alt="nebula" />
+        <img className={styles.img} src={(nebula as any).src || nebula} alt="nebula" />
         <div className={styles.text}>{explanation}</div>
       </>
       <div>
