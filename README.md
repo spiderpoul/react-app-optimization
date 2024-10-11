@@ -11,6 +11,12 @@
 
 ### Начало работы
 
+Клонируем проект командой:
+
+```bash
+git clone -b holyjs git@github.com:spiderpoul/react-app-optimization.git .
+```
+
 1. Открываем проект в IDE.
 2. Заходим в папку react
 3. Устанавливаем зависимости `npm install`
