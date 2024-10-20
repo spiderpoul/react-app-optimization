@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { FC, useState } from "react";
 import { AccordionItem } from "./AccordionItem";
 
@@ -15,15 +15,20 @@ export const Accordion: FC<{ sections: Section[] }> = ({ sections }) => {
     <div>
       {sections.map(({ id, text, title }) => {
         const isOpen = openSections.includes(id);
-        return (
+        const accordionItem = (
           <AccordionItem
-            key={Math.random()}
+            key={id}
             id={id}
             isOpen={isOpen}
             text={text}
             title={title}
-            onToggle={() => setOpenSections([id])}
+            onToggle={() => setOpenSections(isOpen ? [] : [id])}
           />
+        );
+        return isOpen ? (
+          accordionItem
+        ) : (
+          <div className="opened">{accordionItem}</div>
         );
       })}
     </div>

@@ -1,10 +1,20 @@
 import cx from "classnames";
 import styles from "./Accordion.module.scss";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { longLayoutCalculations } from "./heavyCalcs";
 
 export const AccordionItem = ({ id, isOpen, text, title, onToggle }) => {
   const contentRef = useRef<HTMLDivElement>();
   const [height, setHeight] = useState(0);
+
+  useLayoutEffect(() => {
+    performance.mark("longLayoutCalculations");
+    longLayoutCalculations();
+    performance.measure(
+      `AccordionItem "${title}" layout`,
+      "longLayoutCalculations"
+    );
+  }, []);
 
   useEffect(() => {
     const content = contentRef.current;

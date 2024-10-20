@@ -3,6 +3,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const StatoscopeWebpackPlugin = require('@statoscope/webpack-plugin').default;
 
 const path = require("path");
 const buildPath = path.resolve(__dirname, "build");
@@ -99,6 +100,8 @@ module.exports = {
     new BundleAnalyzerPlugin({
       openAnalyzer: false,
     }),
+    process.env.ANALYZE &&
+    new StatoscopeWebpackPlugin(),
   ].filter(Boolean),
   devtool: "source-map",
   devServer: {

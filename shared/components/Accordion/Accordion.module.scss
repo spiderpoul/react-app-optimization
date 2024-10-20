@@ -5,6 +5,7 @@
     border-radius: 0.5rem;
     overflow: hidden;
     max-width: 600px;
+    margin-bottom: 5px;
 }
 
 .container:last-of-type {
@@ -34,13 +35,14 @@
     width: 1em;
     height: 1em;
     text-align: center;
-    
+
     transition: all 0.35s;
 }
 
 .arrow-up {
     transform: rotate(90deg);
 }
+
 .arrow-down {
     transform: rotate(270deg);
 }

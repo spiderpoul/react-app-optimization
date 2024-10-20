@@ -1,13 +1,13 @@
-# Воркшоп "Web-perf: найти и оптимизировать"
+# Воркшоп "Web-performance: найти и оптимизировать"
 
 ### Пререквизиты
 
 Для начала работы на вашем компьютере должны быть:
 
-* Установлен Google Chrome и IDE
-* Установлен Node.js и npm
-* Расширение Web vitals для Chrome https://chromewebstore.google.com/detail/web-vitals/ahfhijdlegdabablpippeagghigmibma
-* Хорошее настроение :)
+- Установлен Google Chrome и IDE
+- Установлен Node.js 18 и выше + npm
+- Расширение Web Vitals для Chrome https://chromewebstore.google.com/detail/web-vitals/ahfhijdlegdabablpippeagghigmibma
+- Хорошее настроение :)
 
 ### Начало работы
 
@@ -23,8 +23,8 @@ git clone -b holyjs git@github.com:spiderpoul/react-app-optimization.git .
 4. Запускаем проект командой `npm run start`
 5. Открываем наш проект на порту 8080 – http://localhost:8080
 6. В настройках расширения Web Vitals включите следующие опции:
-    * Console logging
-    * User Timings (for DevTools Performance Panel recordings).
+   - Console logging
+   - User Timings (for DevTools Performance Panel recordings).
 
 ## Найти
 
@@ -32,23 +32,23 @@ git clone -b holyjs git@github.com:spiderpoul/react-app-optimization.git .
 
 Зайдите на вкладку Performance в Chrome, установите следующие параметры тротлинга:
 
-* Network: `fast 4g`
-* CPU: `6x slowdown`
+- Network: `fast 4g`
+- CPU: `6x slowdown`
 
 Для составления отчёта о первоначальной загрузке нажмите на кнопку "Record and Reload"
 
-1) Анализ скорости загрузки ресурсов
-2) Анализ LCP Resource deleay (Web Vitals  User Timings)
-3) Выделение ресурсов, блокирующих рендеринг
-4) Анализ нагрузки на CPU и долгих тасок
+1. Анализ скорости загрузки ресурсов
+2. Анализ LCP Resource deleay (Web Vitals User Timings)
+3. Выделение ресурсов, блокирующих рендеринг
+4. Анализ нагрузки на CPU и долгих тасок
 
 #### Анализ INP
 
-1) Нажмите запись и сделайте несколько кликов по элементам аккордиона
-2) Остановите запись
-3) Анализ нагрузки на CPU
-4) Layout trashing
-5) Performance метки
+1. Нажмите запись и сделайте несколько кликов по элементам аккордиона
+2. Остановите запись
+3. Анализ нагрузки на CPU
+4. Layout trashing
+5. Performance метки
 
 ## Оптимизировать
 
@@ -61,7 +61,7 @@ git clone -b holyjs git@github.com:spiderpoul/react-app-optimization.git .
 В файле `react/server.js` добавьте строчку:
 
 ```js
-app.use(compression())
+app.use(compression());
 ```
 
 #### 2. Настройка сборки
@@ -79,24 +79,29 @@ mode: isDevMode ? "development" : 'production',
 💡 Использование свежих стандартов для новых браузеров делает код более производительным и снижает размер бандлов на 15-30%.
 
 в файле
+
 ```json
            "@babel/preset-env",
-            { 
-                "targets": "last 2 versions",
+            {
+                "targets": "last 2 versions, not dead",
                 ...
             }
 
 ```
 
-#### 4. Bundle analyzer
+#### 4. Bundle analyzer и Statoscope
 
 💡 Анализ бандла поможет найти причины его "тучности", обнаружить дублирующие библиотеки и тп.
 
-Запустите `npm run build-analyze` для запуска `BundleAnalyzerPlugin`
+Запустите `npm run build-analyze` для запуска `BundleAnalyzerPlugin` и `Statoscope`
+
+```js
+"react-dom$": require.resolve("react-dom"),
+```
 
 #### 5. Code splitting
 
-💡 Постраничный/покомпонентый code-splitting позволяет в разы уменьшить размер первоначального бандла и загружать код по требованию
+💡 Постраничный/покомпонентый code-splitting позволяет в разы уменьшить размер первоначального бандла и загружать код по требованию, однако стоить помнить, что это может увеличивать скорость загрузки страниц
 
 В файле `react/app/App.tsx` сделайте lazy загрузку страниц
 
@@ -141,13 +146,13 @@ const router = createBrowserRouter([
 В файле `react/index.html` удалите строчку
 
 ```html
-   <link rel="stylesheet" href="/icons.css">
+<link rel="stylesheet" href="/icons.css" />
 ```
 
 и перенесите его импорт в `react/index.tsx`
 
 ```js
-import './public/icons.css'
+import "./public/icons.css";
 ```
 
 ### CLS
@@ -159,12 +164,11 @@ import './public/icons.css'
 В файле `shared/components/PictureOfTheDay/PicOfTheDay.module.scss` задайте для класса `.img`:
 
 ```css
-    .img {
-        width: 60%;
-        aspect-ratio: 3/4;
-    }
+.img {
+  width: 60%;
+  aspect-ratio: 3/4;
+}
 ```
-
 
 ### INP
 
@@ -172,48 +176,35 @@ import './public/icons.css'
 
 #### Циклический unmount
 
-В файле `shared/components/Accordion/AccordionList.tsx` установим стабильный  ключ:
-
-```tsx
-<AccordionItem
-    key={id} // установка стабильного ключа
-    id={id}
-    isOpen={isOpen}
-    text={text}
-    title={title}
-    onToggle={() => setOpenSections([id])}
-    />
-```
-
 #### Оптимизация лишних ререндеров
 
-💡 Понять какие именно компоненты реренделись и почему поможет расширение React Profiler.
-
-Вместо анонимной функции можно пробрасывать не изменяемую функцию `onToggle`. В файле `shared/components/Accordion/AccordionList.tsx`:
+💡 Понять какие именно компоненты ререндерились и почему поможет расширение React Profiler.
 
 ```tsx
 <AccordionItem
-    key={id} 
-    id={id}
-    isOpen={isOpen}
-    text={text}
-    title={title}
-    onToggle={setOpenSections} // onToggle теперь не будет приводить к ререндеру
-    />
+  key={id}
+  id={id}
+  isOpen={isOpen}
+  text={text}
+  title={title}
+  onToggle={setOpenSections} // onToggle теперь не будет приводить к ререндеру
+/>
 ```
 
 Далее в `shared/components/Accordion/AccordionItem.tsx`
 
-создадим функцию 
+создадим функцию
 
 ```ts
-const onClick = () => onToggle([id]) 
+const onClick = () => onToggle([id])
 ...
 // обновим имя функции
 <div className={styles.header} onClick={onClick}>
 ```
 
-Теперь, чтобы предотвратить излишний ререндер компонента обернём его в `memo`.
+💡 Ререндер родителя приводит к ререндеру всех его детей.
+
+Теперь, чтобы предотвратить излишний ререндер дочерних компонентов обернём его в `memo`.
 
 ## Обезвредить 😎
 
@@ -223,16 +214,16 @@ const onClick = () => onToggle([id])
 
 #### App router + server components
 
-1) Декомпозиция компонентов
-2) Уход от CSS-in-JS для основного каркаса приложения
+1. Декомпозиция компонентов
+2. Уход от CSS-in-JS для основного каркаса приложения
 
 #### Оптимизация изображений
 
 💡 Next.JS имеет элемент `Image`, который включает в себя все необходимые оптимизации:
 
-* Size Optimization: автоматическое конвертирование в WebP and AVIF.
-* Visual Stability: Предотвращают CLS.
-* Progressive image loading
+- Size Optimization: автоматическое конвертирование в WebP and AVIF.
+- Visual Stability: Предотвращают CLS.
+- Progressive image loading
 
 в файле `shared/components/Header/Header.tsx`
 
@@ -240,7 +231,6 @@ const onClick = () => onToggle([id])
 import styles from "./Header.module.scss";
 import Image from "next/image";
 import defaultBg from "../../img/default-bg.png";
-
 
 export const Header = () => {
   return (
@@ -259,7 +249,6 @@ export const Header = () => {
 };
 ```
 
-
 В файле `shared/components/PictureOfTheDay/PicOfTheDay.tsx`
 
 ```tsx
@@ -277,7 +266,6 @@ import Image from "next/image";
             />
 ```
 
-
 #### Prefetch для страниц
 
 💡 `next/link` позволяет префетчить данные страницы и обеспечивает базовую навигацию по роутам
@@ -285,15 +273,14 @@ import Image from "next/image";
 В компоненте `next-js/components/Nav/Nav.tsx` добавьте свойство `prefetch`
 
 ```tsx
-        <Link
-          key={to}
-          className={cx(pathname === to && "active", styles.NavItem)}
-          href={to}
-          prefetch={true}
-        >
-          {title}
-        </Link>
-    
+<Link
+  key={to}
+  className={cx(pathname === to && "active", styles.NavItem)}
+  href={to}
+  prefetch={true}
+>
+  {title}
+</Link>
 ```
 
 #### Оптимизация шрифтов
@@ -304,8 +291,8 @@ import Image from "next/image";
 
 ```css
 @font-face {
-  font-family: 'LilitaOne';
-  src: url('../shared/fonts/LilitaOne.ttf') format('truetype');
+  font-family: "LilitaOne";
+  src: url("../shared/fonts/LilitaOne.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -323,10 +310,13 @@ const myFont = localFont({
 });
 
 // чтобы применить шрифт к элементу, необходимо использовать свойства className или style
-<h1 className={styles.title} style={myFont.style}>{title}</h1>
+<h1 className={styles.title} style={myFont.style}>
+  {title}
+</h1>;
 ```
 
 #### Instant Loading States
+
 💡 An instant loading state is fallback UI that is shown immediately upon navigation. The new content is automatically swapped in once rendering is complete.
 
 В папке `next-js/app/planets/[planet]` создадим файл `loading.tsx` с содержимым:
@@ -335,8 +325,8 @@ const myFont = localFont({
 import { GridLoader } from "../../../../shared/components/ImagesGrid";
 
 export default function Loading() {
-    return <GridLoader />
-  }
+  return <GridLoader />;
+}
 ```
 
 #### Streaming with Suspense
@@ -347,18 +337,19 @@ export default function Loading() {
 
 ```tsx
 const MainPageWrapper = () => {
-  return <Suspense fallback={<div>Loading content</div>}>
-    <MainPage />
-  </Suspense>
-}
-
+  return (
+    <Suspense fallback={<div>Loading content</div>}>
+      <MainPage />
+    </Suspense>
+  );
+};
 
 export default MainPageWrapper;
 ```
 
 #### Caching
 
-💡 By default, Next.js will cache as much as possible to improve performance and reduce cost. This means routes are statically rendered and data requests are cached unless you opt out. 
+💡 By default, Next.js will cache as much as possible to improve performance and reduce cost. This means routes are statically rendered and data requests are cached unless you opt out.
 
 #### NextJS bundle analyzer
 

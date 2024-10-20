@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./app/App";
 import "./reportWebVitals";
-import './index.css'
+import "./index.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-performance.mark('InitialRender')
+performance.mark("InitialRender");
 root.render(<App />);
-performance.measure('Root initial render', 'InitialRender')
+performance.measure("Root initial render", "InitialRender");
