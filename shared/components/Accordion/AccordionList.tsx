@@ -1,6 +1,7 @@
 "use client";
-import { FC, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { AccordionItem } from "./AccordionItem";
+import cx from "classnames";
 
 interface Section {
   id: number;

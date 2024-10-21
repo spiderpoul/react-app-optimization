@@ -1,18 +1,18 @@
 import cx from "classnames";
 import styles from "./Accordion.module.scss";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { longLayoutCalculations } from "./heavyCalcs";
+import { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { myLayoutCalculations, myRenderCalculation } from "./heavyCalcs";
 
 export const AccordionItem = ({ id, isOpen, text, title, onToggle }) => {
   const contentRef = useRef<HTMLDivElement>();
   const [height, setHeight] = useState(0);
 
   useLayoutEffect(() => {
-    performance.mark("longLayoutCalculations");
-    longLayoutCalculations();
+    performance.mark("firstRenderLayout");
+    myLayoutCalculations();
     performance.measure(
-      `AccordionItem "${title}" layout`,
-      "longLayoutCalculations"
+      `AccordionItem "${id}" first render delay`,
+      "firstRenderLayout"
     );
   }, []);
 
@@ -27,6 +27,8 @@ export const AccordionItem = ({ id, isOpen, text, title, onToggle }) => {
       setHeight(0);
     }
   }, [isOpen, onToggle]);
+
+  myRenderCalculation();
 
   return (
     <div className={styles.container}>

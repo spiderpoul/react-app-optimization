@@ -19,9 +19,10 @@
   },
   "scripts": {
     "start": "npm run build && npm run server",
-    "start-dev": "cross-env NODE_ENV=dev run build && npm run server",
+    "start-dev": "npm run build-dev && npm run server",
     "dev-server": "webpack serve --config webpack.config.js",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
+    "build-dev": "cross-env NODE_ENV=dev webpack --config webpack.config.js",
     "build-analyze": "cross-env ANALYZE=1 webpack --config webpack.config.js",
     "server": "node server"
   },
