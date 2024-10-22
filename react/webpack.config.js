@@ -98,7 +98,7 @@ module.exports = {
     }),
     process.env.ANALYZE &&
     new BundleAnalyzerPlugin({
-      openAnalyzer: false,
+      openAnalyzer: true,
     }),
     process.env.ANALYZE &&
     new StatoscopeWebpackPlugin(),

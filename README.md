@@ -101,10 +101,13 @@ mode: isDevMode ? "development" : 'production',
 
 `react/webpack.config.js`
 
-В рамках анализа были обнаружены дублирующие библиотеки. В нашем случае это можно решить с помощью resolve.alias для использования одной версии библиотек.
+В рамках анализа были обнаружены дублирующие библиотеки, из-за текущей структуры проекта с общими компонентами. В нашем случае это можно решить с помощью resolve.modules, чтобы явно указать вебпаку в какой папке cначала стоит искать модули.
 
 ```js
-"react-dom$": require.resolve("react-dom"),
+  resolve: {
+    modules: [path.resolve(__dirname, 'node_modules'), 'node_modules'],
+    ...
+  }
 ```
 
 #### 5. Code splitting
@@ -226,7 +229,46 @@ const onToggle = useCallback(
 #### App router + server components
 
 1. Декомпозиция компонентов
-2. Уход от CSS-in-JS для основного каркаса приложения
+2. Хуки и эффекты работают только в client components
+3. Уход от CSS-in-JS для основного каркаса приложения
+
+#### Caching
+
+💡 By default, Next.js will cache as much as possible to improve performance and reduce cost. This means routes are statically rendered and data requests are cached unless you opt out.
+
+#### Instant Loading States
+
+💡 An instant loading state is fallback UI that is shown immediately upon navigation. The new content is automatically swapped in once rendering is complete.
+
+В папке `next-js/app/planets/[planet]` создадим файл `loading.tsx` с содержимым:
+
+```tsx
+import { GridLoader } from "../../../../shared/components/ImagesGrid";
+
+export default function Loading() {
+  return <GridLoader />;
+}
+```
+
+#### Streaming with Suspense
+
+💡 Streaming allows you to break down the page's HTML into smaller chunks and progressively send those chunks from the server to the client.
+
+--- здесь можно увеличить время ответа apod и убрать кэширование, чтобы показать что первоначальный запрос на index.html стал значительно дольше
+
+В папке `next-js/app/page.tsx` оберните компонент, в котором происходит фетчинг данных в Suspense:
+
+```tsx
+const MainPageWrapper = () => {
+  return (
+    <Suspense fallback={<div>Loading content</div>}>
+      <MainPage />
+    </Suspense>
+  );
+};
+
+export default MainPageWrapper;
+```
 
 #### Оптимизация изображений
 
@@ -277,23 +319,6 @@ import Image from "next/image";
             />
 ```
 
-#### Prefetch для страниц
-
-💡 `next/link` позволяет префетчить данные страницы и обеспечивает базовую навигацию по роутам
-
-В компоненте `next-js/components/Nav/Nav.tsx` добавьте свойство `prefetch`
-
-```tsx
-<Link
-  key={to}
-  className={cx(pathname === to && "active", styles.NavItem)}
-  href={to}
-  prefetch={true}
->
-  {title}
-</Link>
-```
-
 #### Оптимизация шрифтов
 
 💡 next/font will automatically optimize your fonts (including custom fonts) and remove external network requests for improved privacy and performance.
@@ -326,43 +351,22 @@ const myFont = localFont({
 </h1>;
 ```
 
-#### Instant Loading States
+#### Prefetch для страниц
 
-💡 An instant loading state is fallback UI that is shown immediately upon navigation. The new content is automatically swapped in once rendering is complete.
+💡 `next/link` позволяет префетчить данные страницы и обеспечивает базовую навигацию по роутам
 
-В папке `next-js/app/planets/[planet]` создадим файл `loading.tsx` с содержимым:
-
-```tsx
-import { GridLoader } from "../../../../shared/components/ImagesGrid";
-
-export default function Loading() {
-  return <GridLoader />;
-}
-```
-
-#### Streaming with Suspense
-
-💡 Streaming allows you to break down the page's HTML into smaller chunks and progressively send those chunks from the server to the client.
-
---- здесь можно увеличить время ответа apod и убрать кэширование, чтобы показать что первоначальный запрос на index.html стал значительно дольше
-
-В папке `next-js/app/page.tsx` оберните компонент, в котором происходит фетчинг данных в Suspense:
+В компоненте `next-js/components/Nav/Nav.tsx` добавьте свойство `prefetch`
 
 ```tsx
-const MainPageWrapper = () => {
-  return (
-    <Suspense fallback={<div>Loading content</div>}>
-      <MainPage />
-    </Suspense>
-  );
-};
-
-export default MainPageWrapper;
+<Link
+  key={to}
+  className={cx(pathname === to && "active", styles.NavItem)}
+  href={to}
+  prefetch={true}
+>
+  {title}
+</Link>
 ```
-
-#### Caching
-
-💡 By default, Next.js will cache as much as possible to improve performance and reduce cost. This means routes are statically rendered and data requests are cached unless you opt out.
 
 #### NextJS bundle analyzer
 
