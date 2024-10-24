@@ -8,7 +8,7 @@ const { APOD } = require('../shared/mocks/mocks');
 
 
 app.use(cors())
-app.use(compression())
+app.use(compression());
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'build')));
 
