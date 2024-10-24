@@ -33,7 +33,7 @@ export const AccordionItem = ({ id, isOpen, text, title, onToggle }) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header} onClick={onToggle}>
+      <div className={styles.header} onClick={() => onToggle(id)}>
         {title}
         <ChevronIcon className={cx(styles.arrow, isOpen && styles.arrowDown)} />
       </div>
