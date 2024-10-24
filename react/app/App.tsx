@@ -16,18 +16,27 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        loader: pictureOfTheDayLoader,
-        element: <MainPage />,
+        lazy: () =>
+          import("../pages/MainPage").then((module) => ({
+            Component: module.default,
+            loader: module.pictureOfTheDayLoader,
+          })),
       },
       {
         path: "/planets/:planet",
-        element: <PlanetPage />,
-        loader: planetInfoLoader,
+        lazy: () =>
+          import("../pages/PlanetPage").then((module) => ({
+            Component: module.default,
+            loader: module.planetInfoLoader,
+          })),
       },
       {
         path: "solar-system",
-        element: <SolarSystemPage />,
-      },
+        lazy: () =>
+          import("../pages/SolarSystemPage").then((module) => ({
+            Component: module.SolarSystemPage,
+          })),
+      }
     ],
   },
 ]);
