@@ -34,10 +34,14 @@
     transition: all 0.35s;
 }
 
-.arrow-up {
-    transform: rotate(90deg);
+.arrow {
+    transform: rotate(0deg);
+    transition: all 0.35s;
+    fill: #227093;
+    width: 15px;
+    height: 15px;
 }
 
 .arrow-down {
-    transform: rotate(270deg);
+    transform: rotate(180deg);
 }

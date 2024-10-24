@@ -81,6 +81,7 @@ module.exports = {
       "styled-components": require.resolve("styled-components"),
       "react$": require.resolve("react"),
     },
+    modules: [path.resolve(__dirname, 'node_modules'), 'node_modules'],
   },
   plugins: [
     new MiniCssExtractPlugin(),
