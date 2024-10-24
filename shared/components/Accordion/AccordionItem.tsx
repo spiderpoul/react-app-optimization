@@ -4,7 +4,7 @@ import { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { myLayoutCalculations, myRenderCalculation } from "./heavyCalcs";
 import { ChevronIcon } from "./ChevronIcon";
 
-export const AccordionItem = ({ id, isOpen, text, title, onToggle }) => {
+const AccordionItem = ({ id, isOpen, text, title, onToggle }) => {
   const contentRef = useRef<HTMLDivElement>();
   const [height, setHeight] = useState(0);
 
@@ -47,3 +47,5 @@ export const AccordionItem = ({ id, isOpen, text, title, onToggle }) => {
     </div>
   );
 };
+
+export const AccordionItemMemo = memo(AccordionItem);
