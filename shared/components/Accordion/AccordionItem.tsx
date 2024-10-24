@@ -2,6 +2,7 @@ import cx from "classnames";
 import styles from "./Accordion.module.scss";
 import { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { myLayoutCalculations, myRenderCalculation } from "./heavyCalcs";
+import { ChevronIcon } from "./ChevronIcon";
 
 export const AccordionItem = ({ id, isOpen, text, title, onToggle }) => {
   const contentRef = useRef<HTMLDivElement>();
@@ -34,12 +35,7 @@ export const AccordionItem = ({ id, isOpen, text, title, onToggle }) => {
     <div className={styles.container}>
       <div className={styles.header} onClick={onToggle}>
         {title}
-        <i
-          className={cx(
-            "fa-solid",
-            isOpen ? "fa-chevron-up" : "fa-chevron-down"
-          )}
-        ></i>
+        <ChevronIcon className={cx(styles.arrow, isOpen && styles.arrowDown)} />
       </div>
       <div
         ref={contentRef as any}
