@@ -12,7 +12,7 @@ const isDevMode = process.env.NODE_ENV !== 'production'
 module.exports = {
   // Entry point for the bundle
   entry: "./index.tsx",
-  mode: "development",
+  mode: isDevMode ? "development" : 'production',
   // Output configuration
   output: {
     // Path where the bundle will be generated
