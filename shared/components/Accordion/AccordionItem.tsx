@@ -6,7 +6,6 @@ import { ChevronIcon } from "./ChevronIcon";
 
 const AccordionItem = ({ id, isOpen, text, title, onToggle }) => {
   const contentRef = useRef<HTMLDivElement>();
-  const [height, setHeight] = useState(0);
 
   useLayoutEffect(() => {
     performance.mark("firstRenderLayout");
@@ -16,18 +15,6 @@ const AccordionItem = ({ id, isOpen, text, title, onToggle }) => {
       "firstRenderLayout"
     );
   }, []);
-
-  useEffect(() => {
-    const content = contentRef.current;
-
-    if (!content) return;
-
-    if (isOpen) {
-      setHeight(content.scrollHeight);
-    } else {
-      setHeight(0);
-    }
-  }, [isOpen, onToggle]);
 
   myRenderCalculation();
 
@@ -40,7 +27,7 @@ const AccordionItem = ({ id, isOpen, text, title, onToggle }) => {
       <div
         ref={contentRef as any}
         className={styles.contentWrapper}
-        style={{ height }}
+        style={{ height: isOpen ? contentRef.current?.scrollHeight : 0 }}
       >
         <div className={styles.content}>{text}</div>
       </div>
