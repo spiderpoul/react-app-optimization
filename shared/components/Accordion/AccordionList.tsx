@@ -12,6 +12,11 @@ interface Section {
 export const Accordion: FC<{ sections: Section[] }> = ({ sections }) => {
   const [openSections, setOpenSections] = useState<number[]>([]);
 
+  const onToggle = useCallback(
+    (id) => setOpenSections((prev) => (prev.includes(id) ? [] : [id])),
+    []
+  );
+
   return (
     <div>
       {sections.map(({ id, text, title }) => {
@@ -23,13 +28,13 @@ export const Accordion: FC<{ sections: Section[] }> = ({ sections }) => {
             isOpen={isOpen}
             text={text}
             title={title}
-            onToggle={() => setOpenSections(isOpen ? [] : [id])}
+            onToggle={onToggle}
           />
         );
-        return isOpen ? (
-          accordionItem
-        ) : (
-          <div className="opened">{accordionItem}</div>
+        return (
+          <div className={cx(isOpen && "opened")} key={id}>
+            {accordionItem}
+          </div>
         );
       })}
     </div>
