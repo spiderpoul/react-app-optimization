@@ -21,7 +21,7 @@ code {
 
 
 @font-face {
-  font-family: 'Open Sans';
+  font-family: "Open Sans", "Segoe UI", Tahoma, sans-serif;;
   src: url('../shared/fonts/OpenSans-Light.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
