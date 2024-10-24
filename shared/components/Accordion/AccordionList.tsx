@@ -1,6 +1,6 @@
 "use client";
 import { FC, useCallback, useState } from "react";
-import { AccordionItem } from "./AccordionItem";
+import { AccordionItemMemo as AccordionItem } from "./AccordionItem";
 import cx from "classnames";
 
 interface Section {
