@@ -6,7 +6,7 @@ import PagePlaceholder from "../../shared/components/PagePlaceholder/PagePlaceho
 
 async function getData(): Promise<PictureOfTheDayResponse> {
   const res = await fetch(API_URL_IMAGE_OF_THE_DAY, {
-    cache: "no-store",
+    next: { revalidate: 60 * 60 * 24 },
   });
 
   if (!res.ok) {
