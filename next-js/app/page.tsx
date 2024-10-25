@@ -1,6 +1,8 @@
 import { API_URL_IMAGE_OF_THE_DAY } from "../../shared/constants";
 import { PictureOfTheDayResponse } from "../../shared/types";
 import { PictureOfTheDay } from "../../shared/components/PictureOfTheDay";
+import { Suspense } from "react";
+import PagePlaceholder from "../../shared/components/PagePlaceholder/PagePlaceholder";
 
 async function getData(): Promise<PictureOfTheDayResponse> {
   const res = await fetch(API_URL_IMAGE_OF_THE_DAY, {
@@ -21,4 +23,12 @@ const MainPage = async () => {
   return <PictureOfTheDay {...data} />;
 };
 
-export default MainPage;
+const MainPageWrapper = () => {
+  return (
+    <Suspense fallback={<PagePlaceholder />}>
+      <MainPage />
+    </Suspense>
+  );
+};
+
+export default MainPageWrapper;
