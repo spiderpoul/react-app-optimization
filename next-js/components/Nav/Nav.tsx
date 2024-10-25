@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import cx from 'classnames'
+import cx from "classnames";
 
 import { NAV_ITEMS } from "../../../shared/constants";
 
@@ -16,7 +16,7 @@ const Nav: React.FC<{}> = () => {
       {NAV_ITEMS.map(({ title, to }) => (
         <Link
           key={to}
-          className={cx(pathname === to && "active", styles.NavItem)}
+          className={cx(pathname === to && styles.active, styles.NavItem)}
           href={to}
         >
           {title}

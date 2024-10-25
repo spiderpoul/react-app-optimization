@@ -1,15 +1,10 @@
 .container {
     color: #227093;
-    border: 2px solid;
-    border-bottom: none;
+    border: 1px solid;
     border-radius: 0.5rem;
     overflow: hidden;
     max-width: 600px;
     margin-bottom: 5px;
-}
-
-.container:last-of-type {
-    border-bottom: 2px solid;
 }
 
 .content-wrapper {

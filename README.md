@@ -17,10 +17,16 @@
 git clone -b holyjs git@github.com:spiderpoul/react-app-optimization.git .
 ```
 
+Далее переходим в тэг start в истории комитов:
+
+```bash
+git checkout start
+```
+
 1. Открываем проект в IDE.
-2. Заходим в папку react
+2. Заходим в папку `react`
 3. Устанавливаем зависимости `npm install`
-4. Запускаем проект командой `npm run start`
+4. Запускаем проект командой `npm run build` и `npm run server`
 5. Открываем наш проект на порту 8080 – http://localhost:8080
 6. В настройках расширения Web Vitals включите следующие опции:
    - Console logging
@@ -37,24 +43,19 @@ git clone -b holyjs git@github.com:spiderpoul/react-app-optimization.git .
 
 Для составления отчёта о первоначальной загрузке нажмите на кнопку "Record and Reload"
 
-1. Анализ скорости загрузки ресурсов
-2. Анализ LCP Resource deleay (Web Vitals User Timings)
-3. Выделение ресурсов, блокирующих рендеринг
-4. Анализ нагрузки на CPU и долгих тасок
-
-#### Анализ INP
-
-1. Нажмите запись и сделайте несколько кликов по элементам аккордиона
-2. Остановите запись
-3. Анализ нагрузки на CPU
-4. Layout trashing
-5. Performance метки
+1. Обзор блоков
+2. Разбор CRP
+3. Анализ LCP Resource deleay (Web Vitals User Timings)
 
 ## Оптимизировать
 
-### LCP
+### LCP. Шаг 1
 
-#### 1. Сжатие ресурсов
+```bash
+git checkout lcp-1
+```
+
+#### 1.1. Сжатие ресурсов
 
 💡 Использование сжатия в gzip и Brotli позволяет существенно снизить размер передаваемых данных.
 
@@ -68,7 +69,7 @@ app.use(compression());
 
 💡 В целом использование express/nodejs для раздачи статики не очень хорошая идея - под нагрузкой он сильно проигрывает nginx. Самым лучшим вариантом будет использование CDN.
 
-#### 2. Настройка сборки
+#### 1.2. Настройка сборки
 
 💡 Prod сборки занимают на выходе весят в несколько раз меньше и более производительны. В том числе React работает значительно быстрее в prod режиме, но содержит меньше информации для дебага.
 
@@ -78,7 +79,7 @@ app.use(compression());
 mode: isDevMode ? "development" : 'production',
 ```
 
-#### 3. Оптимизация списка браузеров
+#### 1.3. Оптимизация списка браузеров
 
 💡 Использование свежих стандартов для новых браузеров делает код более производительным и снижает размер бандлов на 15-30%.
 
@@ -93,7 +94,13 @@ mode: isDevMode ? "development" : 'production',
 
 ```
 
-#### 4. Bundle analyzer и Statoscope
+### LCP. Шаг 2
+
+```bash
+git checkout lcp-2
+```
+
+#### 2.1. Bundle analyzer и Statoscope
 
 💡 Анализ бандла поможет найти причины его "тучности", обнаружить дублирующие библиотеки и тп.
 
@@ -101,7 +108,7 @@ mode: isDevMode ? "development" : 'production',
 
 `react/webpack.config.js`
 
-В рамках анализа были обнаружены дублирующие библиотеки, из-за текущей структуры проекта с общими компонентами. В нашем случае это можно решить с помощью resolve.modules, чтобы явно указать вебпаку в какой папке cначала стоит искать модули.
+В рамках анализа были обнаружены дублирующие библиотеки, из-за текущей структуры проекта с общими компонентами. В нашем случае это можно решить с помощью `resolve.modules, чтобы явно указать вебпаку в какой папке cначала стоит искать модули.
 
 ```js
   resolve: {
@@ -110,7 +117,7 @@ mode: isDevMode ? "development" : 'production',
   }
 ```
 
-#### 5. Code splitting
+#### 2.2. Code splitting
 
 💡 Постраничный/покомпонентый code-splitting позволяет в разы уменьшить размер первоначального бандла и загружать код по требованию, однако стоить помнить, что это может увеличивать скорость загрузки страниц.
 
@@ -138,9 +145,9 @@ const router = createBrowserRouter([
 ]);
 ```
 
-#### Оптимизация CSS
+#### 2.2. Оптимизация CSS
 
-💡 CSS — это ресурс , блокирующий рендеринг, грузится в самом высоком приоритете. Необходимо выделить минимальное количество CSS необходимое для рендера основного каркаса приложения.
+💡 CSS — это ресурс , блокирующий рендеринг, грузится в самом высоком приоритете. Необходимо выделить минимальное количество CSS необходимое для рендера основного каркаса приложения и не забывать про его минимизацию.
 
 В файле `react/index.html` удалите строчку
 
@@ -152,6 +159,10 @@ const router = createBrowserRouter([
 
 ### CLS
 
+```bash
+git checkout cls
+```
+
 #### Оптимизация сдвига контента
 
 💡 Изображения без заранее заданных размеров высоты и ширины приводят к сдвигу контента.
@@ -160,14 +171,18 @@ const router = createBrowserRouter([
 
 ```css
 .img {
-  width: 60%;
-  aspect-ratio: 3/4;
+  ...
+  aspect-ratio: 4 / 3;
 }
 ```
 
 ### INP
 
-Оптимизация Accordion
+Для более удобного дебага React компонентов сделаем dev-сборку
+
+```bash
+npm run build-dev
+```
 
 #### Reconciliation reminder
 
@@ -183,13 +198,11 @@ return (
 );
 ```
 
-#### Wasted renders - memo
+#### Wasted renders - unstable props
 
-💡 Ререндер родителя приводит к ререндеру его детей. Чтобы предовратить ререндер, при условии что пропсы не поменялись поможет `memo`.
+Анализ в React profiler показал, что все клик на одном компоненте приводит к ререндеру всех элементов, из-за поменявшейся пропсы onToggle, которая пересоздаётся на каждый рендер.
 
-Чтобы предотвратить излишний ререндер дочерних компонентов обернём его в `memo`.
-
-Однако это не помогло, поскольку пропса onToggle пересоздаётся на каждый рендер. Здесь может быть несколько решений, но одно из наиболее распространённых - обернуть в useCallback.
+Здесь может быть несколько решений, но одно из наиболее распространённых - обернуть в useCallback.
 
 `shared/components/Accordion/AccordionList.tsx`:
 
@@ -200,7 +213,7 @@ const onToggle = useCallback(
 );
 ```
 
-Теперь в AccordionItem приходит неизменяющая функция `AccordionItem`, однако нужно изменить вызов внутри компонента:
+Теперь в AccordionItem приходит неизменяемая функция `AccordionItem`, однако нужно изменить вызов внутри компонента:
 
 `shared/components/Accordion/AccordionItem.tsx`
 
@@ -208,7 +221,21 @@ const onToggle = useCallback(
 <div className={styles.header} onClick={() => onToggle(id)}>
 ```
 
-#### Wasted renders - useEffect
+```bash
+git checkout inp-1
+```
+
+#### Wasted renders - memo
+
+💡 Ререндер родителя приводит к ререндеру его детей. Чтобы предовратить ререндер, при условии что пропсы не поменялись поможет `memo`.
+
+Чтобы предотвратить излишний ререндер дочерних компонентов обернём его в `memo`.
+
+```bash
+git checkout inp-2
+```
+
+#### Overuse useEffect
 
 💡 Не злоупотребляйте использованием useEffect. Ищите возможности его упрощения / декомпозиции.
 
@@ -220,11 +247,25 @@ const onToggle = useCallback(
   style={{ height: isOpen ? contentRef.current?.scrollHeight : 0 }}
 ```
 
+```bash
+git checkout inp-3
+```
+
 ## Обезвредить 😎
 
 ### Миграция на Nextjs
 
 💡 Отрисовка готового HTML и формирование HTML через JS могут сильно различаться по производительности.
+
+Запуск:
+
+1. Перейдите в папку `next-js`
+2. Остановите запущенные процессы
+3. Установите зависимости `npm install`
+4. Запустите приложение:
+   1. `npm run next-start`
+   2. `npm run server`
+5. Откройте приложение `localhost:9090`
 
 #### App router + server components
 
@@ -232,9 +273,49 @@ const onToggle = useCallback(
 2. Хуки и эффекты работают только в client components
 3. Уход от CSS-in-JS для основного каркаса приложения
 
-#### Caching
+#### Оптимизация изображений
 
-💡 By default, Next.js will cache as much as possible to improve performance and reduce cost. This means routes are statically rendered and data requests are cached unless you opt out.
+💡 Next.JS имеет элемент `Image`, который включает в себя все необходимые оптимизации:
+
+- Size Optimization: автоматическое конвертирование в WebP and AVIF.
+- Visual Stability: Предотвращают CLS.
+- Progressive image loading
+
+в файле `shared/components/Header/Header.tsx`
+
+```tsx
+import Image from "next/image";
+...
+<Image
+  className={styles.headerImage}
+  src={defaultBg}
+  width={1500}
+  height={500}
+  quality={80}
+  placeholder="blur"
+  alt="nebula"
+/>
+```
+
+В файле `shared/components/PictureOfTheDay/PicOfTheDay.tsx`
+
+```tsx
+import Image from "next/image";
+...
+<Image
+  className={styles.img}
+  src={hdurl}
+  width={700}
+  height={400}
+  quality={80}
+  placeholder="blur"
+  alt="nebula"
+/>
+```
+
+```bash
+git checkout nextjs-image
+```
 
 #### Instant Loading States
 
@@ -250,11 +331,21 @@ export default function Loading() {
 }
 ```
 
+```bash
+git checkout nextjs-loading-state
+```
+
+#### Caching
+
+💡 By default, Next.js will cache as much as possible to improve performance and reduce cost. This means routes are statically rendered and data requests are cached unless you opt out.
+
+```ts
+fetch(`https://...`, { next: { revalidate: false | 0 | number } });
+```
+
 #### Streaming with Suspense
 
 💡 Streaming allows you to break down the page's HTML into smaller chunks and progressively send those chunks from the server to the client.
-
---- здесь можно увеличить время ответа apod и убрать кэширование, чтобы показать что первоначальный запрос на index.html стал значительно дольше
 
 В папке `next-js/app/page.tsx` оберните компонент, в котором происходит фетчинг данных в Suspense:
 
@@ -270,53 +361,8 @@ const MainPageWrapper = () => {
 export default MainPageWrapper;
 ```
 
-#### Оптимизация изображений
-
-💡 Next.JS имеет элемент `Image`, который включает в себя все необходимые оптимизации:
-
-- Size Optimization: автоматическое конвертирование в WebP and AVIF.
-- Visual Stability: Предотвращают CLS.
-- Progressive image loading
-
-в файле `shared/components/Header/Header.tsx`
-
-```tsx
-import styles from "./Header.module.scss";
-import Image from "next/image";
-import defaultBg from "../../img/default-bg.png";
-
-export const Header = () => {
-  return (
-    <div className={styles.HeaderContainer}>
-      <Image
-        className={styles.HeaderImage}
-        src={defaultBg}
-        width={1500}
-        height={500}
-        quality={80}
-        placeholder="blur"
-        alt="nebula"
-      />
-    </div>
-  );
-};
-```
-
-В файле `shared/components/PictureOfTheDay/PicOfTheDay.tsx`
-
-```tsx
-import Image from "next/image";
-...
-
-            <Image
-              className={styles.img}
-              src={nebula}
-              width={700}
-              height={400}
-              quality={80}
-              placeholder="blur"
-              alt="nebula"
-            />
+```bash
+git checkout nextjs-streaming
 ```
 
 #### Оптимизация шрифтов
@@ -349,6 +395,10 @@ const myFont = localFont({
 <h1 className={styles.title} style={myFont.style}>
   {title}
 </h1>;
+```
+
+```bash
+git checkout nextjs-fonts
 ```
 
 #### Prefetch для страниц

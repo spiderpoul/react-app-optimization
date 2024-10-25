@@ -1,7 +1,7 @@
 
 export const NAV_ITEMS = [
     { to: '/', title: 'Pic of the day', },
-    { to: 'solar-system', title: 'Solar System' },
+    { to: '/solar-system', title: 'Solar System' },
     { to: '/planets/earth', title: 'Earth' },
     { to: '/planets/saturn', title: 'Saturn' },
     { to: '/planets/venus', title: 'Venus' }
