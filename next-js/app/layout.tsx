@@ -2,7 +2,13 @@ import React from "react";
 import { BaseLayout } from "../components/BaseLayout";
 import Nav from "../components/Nav/Nav";
 import { Header } from "../../shared/components/Header";
+import localFont from "next/font/local";
 import "../index.css";
+
+const OpenSans = localFont({
+  src: "../../shared/fonts/OpenSans-Light.ttf",
+  display: "swap",
+});
 
 export default function RootLayout({
   children,
@@ -11,11 +17,8 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <body>
-        <BaseLayout
-          header={<Header />}
-          nav={<Nav />}
-        >
+      <body className={OpenSans.className}>
+        <BaseLayout header={<Header />} nav={<Nav />}>
           {children}
         </BaseLayout>
       </body>
