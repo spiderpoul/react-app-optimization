@@ -1,9 +1,15 @@
 import Image from "next/image";
+import localFont from "next/font/local";
 import styles from "./PicOfTheDay.module.scss";
 
 import { Accordion } from "../Accordion/AccordionList";
 import { accordionData } from "../Accordion/sections";
 import { getPlaceholderImage } from "../../../next-js/utils/getPlaceholderImage";
+
+const LilitaOne = localFont({
+  src: "../../fonts/LilitaOne.ttf",
+  display: "swap",
+});
 
 export const PictureOfTheDay = async ({
   title,
@@ -19,7 +25,9 @@ export const PictureOfTheDay = async ({
   return (
     <div className={styles.container}>
       <>
-        <h1 className={styles.title}>{title}</h1>
+        <h1 className={styles.title} style={LilitaOne.style}>
+          {title}
+        </h1>
         <Image
           className={styles.img}
           src={imageWithPlaceholder.src}
