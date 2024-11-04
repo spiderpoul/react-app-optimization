@@ -3,7 +3,9 @@ import { PictureOfTheDayResponse } from "../../shared/types";
 import { PictureOfTheDay } from "../../shared/components/PictureOfTheDay";
 
 async function getData(): Promise<PictureOfTheDayResponse> {
-  const res = await fetch(API_URL_IMAGE_OF_THE_DAY);
+  const res = await fetch(API_URL_IMAGE_OF_THE_DAY, {
+    cache: "no-store",
+  });
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
