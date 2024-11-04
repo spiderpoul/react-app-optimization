@@ -17,22 +17,27 @@
 git clone -b holyjs git@github.com:spiderpoul/react-app-optimization.git .
 ```
 
-Далее переходим в тэг start в истории комитов:
+Далее переходим на стартовый коммит:
 
 ```bash
 git checkout start
 ```
 
 1. Открываем проект в IDE.
-2. Заходим в папку `react`
-3. Устанавливаем зависимости `npm install`
-4. Запускаем проект командой `npm run build` и `npm run server`
+2. Устанавливаем зависимости `npm install` в папках
+   1. `react`
+   2. `shared`
+   3. `next-js`
+3. Заходим в папку `react`
+4. Запускаем проект командой
+   1. `npm run build`
+   2. `npm run server`
 5. Открываем наш проект на порту 8080 – http://localhost:8080
 6. В настройках расширения Web Vitals включите следующие опции:
    - Console logging
    - User Timings (for DevTools Performance Panel recordings).
 
-## Найти (может стоит оформить в виде чек листа?)
+## Найти 👀
 
 ### Performance tab
 
@@ -47,7 +52,7 @@ git checkout start
 2. Разбор CRP
 3. Анализ LCP Resource deleay (Web Vitals User Timings)
 
-## Оптимизировать
+## Оптимизировать 💪
 
 ### LCP. Шаг 1
 
@@ -71,7 +76,7 @@ app.use(compression());
 
 #### 1.2. Настройка сборки
 
-💡 Prod сборки занимают на выходе весят в несколько раз меньше и более производительны. В том числе React работает значительно быстрее в prod режиме, но содержит меньше информации для дебага.
+💡 Prod сборки занимают на выходе в несколько раз меньше и более производительны. В том числе React работает значительно быстрее в prod режиме, но содержит меньше информации для дебага.
 
 В `react/webpack.config.js` установите параметр mode в зависимости от `NODE_ENV`
 
@@ -93,6 +98,11 @@ mode: isDevMode ? "development" : 'production',
             }
 
 ```
+
+##### Итого
+
+- добавили сжатие при отправке
+- значительно уменьшили размер бандла и повысили его производительность
 
 ### LCP. Шаг 2
 
@@ -157,6 +167,12 @@ const router = createBrowserRouter([
 
 И замените используемые иконки на svg аналоги.
 
+#### Итого
+
+- Благодаря анализу бандлов убрали дублирующиеся пакеты
+- Разбили код на чанки
+- Перешли на SVG и избавились от тяжёлой библиотеки иконок, которая блокировала рендеринг при загрузке
+
 ### CLS
 
 ```bash
@@ -176,15 +192,22 @@ git checkout cls
 }
 ```
 
+#### Итого
+
+- убрали сдвиг контента
+- независимо от размеров картинки высота будет соответствовать пропорциям
+
 ### INP
 
-Для более удобного дебага React компонентов сделаем dev-сборку
+Для более удобного дебага React компонентов запустим `dev-server`
 
 ```bash
-npm run build-dev
+npm run dev-server
 ```
 
-#### Reconciliation reminder
+Переходим по ссылке `http://localhost:8080`
+
+#### Reconciliation rule
 
 💡 Всякий раз, когда корневые элементы имеют различные типы, React уничтожает старое дерево и строит новое с нуля.
 
@@ -200,7 +223,7 @@ return (
 
 #### Wasted renders - unstable props
 
-Анализ в React profiler показал, что все клик на одном компоненте приводит к ререндеру всех элементов, из-за поменявшейся пропсы onToggle, которая пересоздаётся на каждый рендер.
+Анализ в React profiler показал, что все клики на одном компоненте приводит к ререндеру всех элементов, из-за поменявшейся пропсы onToggle, которая пересоздаётся на каждый рендер.
 
 Здесь может быть несколько решений, но одно из наиболее распространённых - обернуть в useCallback.
 
@@ -250,6 +273,13 @@ git checkout inp-2
 ```bash
 git checkout inp-3
 ```
+
+#### Итого
+
+- изменения типа корневого элемента приводило к unmount всех его дочерних компонентов
+- избавились от лишних ререндеров тяжёлых компонентов
+  - используя useCallback повысили стабильность пропсов
+  - обернули в memo, чтобы компоненты не ререндерились при рендеринге родителя
 
 ## Обезвредить 😎
 
@@ -317,9 +347,18 @@ import Image from "next/image";
 git checkout nextjs-image
 ```
 
+#### Итого:
+
+Используя компонент "next/image":
+
+- автоматическое конвертирование в WebP/AVIF
+- дополнительное сжатие
+- установка нужных размеров изображения
+- автоматическое формирование blur placeholder
+
 #### Instant Loading States
 
-💡 An instant loading state is fallback UI that is shown immediately upon navigation. The new content is automatically swapped in once rendering is complete.
+💡 В nextjs можно создать fallback для страниц, который отображается сразу после навигации. Новое содержимое автоматически заменяется после завершения рендеринга.
 
 В папке `next-js/app/planets/[planet]` создадим файл `loading.tsx` с содержимым:
 
@@ -337,7 +376,7 @@ git checkout nextjs-loading-state
 
 #### Caching
 
-💡 By default, Next.js will cache as much as possible to improve performance and reduce cost. This means routes are statically rendered and data requests are cached unless you opt out.
+💡 По умолчанию Next.js будет кэшировать как можно больше, чтобы улучшить производительность и снизить затраты. Это означает, что страницы статически рендерятся, а запросы данных кэшируются, если вы не отказались от этого.
 
 ```ts
 fetch(`https://...`, { next: { revalidate: false | 0 | number } });
@@ -345,9 +384,13 @@ fetch(`https://...`, { next: { revalidate: false | 0 | number } });
 
 #### Streaming with Suspense
 
-💡 Streaming allows you to break down the page's HTML into smaller chunks and progressively send those chunks from the server to the client.
+💡 Стриминг позволяет разбить HTML страницы на более мелкие фрагменты и последовательно отправлять эти фрагменты с сервера на клиент.
 
-В папке `next-js/app/page.tsx` оберните компонент, в котором происходит фетчинг данных в Suspense:
+Чтобы показать проблему и эффективность Streaming, мы отключим кэширование запроса и увеличим время ответа запроса на 3 секунды.
+
+Для этого перезапустите сервер командой `npm run server` в папке `next-js`.
+
+Чтобы это исправим сделаем следующее: в папке `next-js/app/page.tsx` оберните компонент, в котором происходит фетчинг данных в Suspense:
 
 ```tsx
 const MainPageWrapper = () => {
@@ -365,9 +408,15 @@ export default MainPageWrapper;
 git checkout nextjs-streaming
 ```
 
+#### Итого
+
+- благодаря стримингу пользовательно получает основной шаблон страницы без задержки на ожидания запроса
+- после выполнения запроса, готовый фрагмент будет отправлен на клиент
+- при этом все запросы остаются на сервере, пользователь получает статический html
+
 #### Оптимизация шрифтов
 
-💡 next/font will automatically optimize your fonts (including custom fonts) and remove external network requests for improved privacy and performance.
+💡 next/font автоматически оптимизирует ваши шрифты (включая пользовательские шрифты) и удаляет внешние сетевые запросы для повышения конфиденциальности и производительности.
 
 В файле удалить описание шрифта:
 
@@ -401,6 +450,11 @@ const myFont = localFont({
 git checkout nextjs-fonts
 ```
 
+#### Итого:
+
+- next-js под капотом оптимизирует доставку шрифтов
+- так же избавились от небольшого Layout shift, который происходил при задержке загрузки шрифтов
+
 #### Prefetch для страниц
 
 💡 `next/link` позволяет префетчить данные страницы и обеспечивает базовую навигацию по роутам
@@ -420,7 +474,7 @@ git checkout nextjs-fonts
 
 #### NextJS bundle analyzer
 
-💡 @next/bundle-analyzer is a plugin for Next.js that helps you manage the size of your JavaScript modules. You can use the information to remove large dependencies, split your code, or only load some parts when needed, reducing the amount of data transferred to the client.
+💡 @next/bundle-analyzer - это плагин для Next.js, который помогает вам управлять размером ваших модулей JavaScript. Вы можете использовать эту информацию, чтобы удалить большие зависимости, разделить ваш код или загружать только некоторые части по мере необходимости, уменьшая количество передаваемых данных клиенту.
 
 Для запуска next/bundle-analyzer используйте скрипт:
 
