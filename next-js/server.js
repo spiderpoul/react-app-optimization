@@ -15,7 +15,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/apod', (req, res) => {
-  res.json(APOD)
+  setTimeout(() => res.json(APOD), 3000)
 })
 
 app.listen(process.env.PORT || 8080);
