@@ -22,9 +22,11 @@
     "web-vitals": "2.1.4"
   },
   "scripts": {
+    "start": "nodemon  --exec \"npm run next-and-server\" --watch ./ --watch ../shared -e js,ts,tsx,css,scss --ignore ./.next",
     "server": "node server",
+    "next-and-server": "concurrently \"npm:server\" \"npm:next-start\" ",
     "next-start": "npm run next-build && next start -p 9090",
-    "next-dev": "next dev -p 9090",
+    "next-dev": "next dev -p 9099",
     "next-build": "next build",
     "next-build-analyze": "ANALYZE=true npm run next-build",
     "next-lint": "next lint"
@@ -42,10 +44,12 @@
     "@svgr/webpack": "8.1.0",
     "@types/react-burger-menu": "2.8.7",
     "@types/react-stack-grid": "0.7.7",
+    "concurrently": "9.1.0",
     "eslint": "8.56.0",
     "eslint-config-next": "14.0.4",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-react": "7.33.2",
+    "nodemon": "3.1.7",
     "sass": "1.71.0"
   }
 }
