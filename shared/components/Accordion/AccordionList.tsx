@@ -27,9 +27,9 @@ export const Accordion: FC<{ sections: Section[] }> = ({ sections }) => {
           />
         );
         return isOpen ? (
-          accordionItem
-        ) : (
           <div className="opened">{accordionItem}</div>
+        ) : (
+          accordionItem
         );
       })}
     </div>
