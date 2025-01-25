@@ -35,3 +35,5 @@ export const Accordion: FC<{ sections: Section[] }> = ({ sections }) => {
     </div>
   );
 };
+
+export default Accordion

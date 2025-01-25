@@ -1,6 +1,8 @@
-import { Accordion } from "../Accordion/AccordionList";
+import { lazy, Suspense } from "react";
 import { accordionData } from "../Accordion/sections";
 import styles from "./PicOfTheDay.module.scss";
+
+const AccordionLazy = lazy(() => import("../Accordion/AccordionList"))
 
 export const PictureOfTheDay: React.FC<{
   title: string;
@@ -15,7 +17,9 @@ export const PictureOfTheDay: React.FC<{
         <div className={styles.text}>{explanation}</div>
       </>
       <div>
-        <Accordion sections={accordionData} />
+        <Suspense fallback="">
+          <AccordionLazy sections={accordionData} />
+        </Suspense>
       </div>
     </div>
   );
