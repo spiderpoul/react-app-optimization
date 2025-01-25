@@ -1,5 +1,3 @@
-# Воркшоп "Web-performance: найти и оптимизировать"
-
 ### Пререквизиты
 
 Для начала работы на вашем компьютере должны быть:
@@ -15,7 +13,7 @@
 Клонируем проект командой:
 
 ```bash
-git clone -b holyjs git@github.com:spiderpoul/react-app-optimization.git .
+git clone -b podlodka git@github.com:spiderpoul/react-app-optimization.git .
 ```
 
 Далее переходим на стартовый коммит:
@@ -37,7 +35,7 @@ git checkout start
    - Console logging
    - User Timings (for DevTools Performance Panel recordings).
 
-## Найти 👀
+## Анализ производительности 👀
 
 ### Performance tab
 

@@ -24,7 +24,12 @@
   "scripts": {
     "start": "nodemon  --exec \"npm run build && npm run server\" --watch ./ --watch ../shared -e js,ts,tsx,css,scss --ignore ./build",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
-    "build-dev": "cross-env NODE_ENV=dev webpack --config webpack.config.js",
+    "start-nginx": "docker run -it --rm --name react_nginx -p 8081:80  -m 512m --memory-reservation=256m  --cpu-quota=10000 react_nginx",
+    "start-express": "docker run -it --rm --name react_express -p 8080:8080  -m 512m --memory-reservation=256m  --cpu-quota=5000 react_express",
+    "start-final": "docker run -it --rm --name react_final -p 8082:80  -m 512m --memory-reservation=256m  --cpu-quota=10000 react_final",
+    "build-nginx": "cd ../ && docker build -t react_nginx -f nginx.Dockerfile .",
+    "build-express": "cd ../ && docker build -t react_express -f express.Dockerfile .",
+    "build-final": "cd ../ && docker build -t react_final -f nginx.Dockerfile .",
     "server": "node server",
     "build-analyze": "cross-env ANALYZE=1 webpack --config webpack.config.js",
     "dev-server": "webpack serve --config webpack.config.js"

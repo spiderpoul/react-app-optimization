@@ -4,13 +4,15 @@ WORKDIR /app
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 ENV NODE_ENV production
-RUN npm install --strict-ssl false
-COPY . .
-RUN npm run build
+# RUN npm install --strict-ssl false
+COPY ./react ./react
+COPY ./shared ./shared
+COPY ./nginx ./nginx
+RUN cd ./react && npm run build
 
 # production environment
 FROM nginx:stable-alpine
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/react/build /usr/share/nginx/html
 COPY --from=build /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
